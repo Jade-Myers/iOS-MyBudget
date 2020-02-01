@@ -1,0 +1,9 @@
+
+platform :ios, '9.0'
+
+target 'Application' do
+  use_frameworks!
+
+  # Pods for Application
+pod 'RealmSwift'
+end
