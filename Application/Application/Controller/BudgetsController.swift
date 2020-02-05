@@ -23,13 +23,21 @@ class BudgetsController : UIViewController {
         loadBudgets()
         tableView.dataSource = self
         
-        tableView.register(UINib(nibName: "BudgetCell", bundle: nil), forCellReuseIdentifier: "cell")
-        print("Test")
+        tableView.register(UINib(nibName: Constants.cellNibName, bundle: nil), forCellReuseIdentifier: Constants.cellIdentifier)
+
+    }
+    
+    
+    @IBAction func addBudgetClicked(_ sender: UIBarButtonItem) {
+        
+        performSegue(withIdentifier: Constants.newBudgetSegue, sender: self)
+        
     }
     
     func loadBudgets(){
         budgets = realm.objects(Budget.self)
     }
+    
     
 }
 
@@ -44,7 +52,9 @@ extension BudgetsController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as! BudgetCell
+        
+        cell.budgetTitle.text = budgets?[indexPath.row].title
         
         return cell
     }
