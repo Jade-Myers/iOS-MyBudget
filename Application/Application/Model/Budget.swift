@@ -10,5 +10,6 @@ import Foundation
 import RealmSwift
 
 class Budget : Object {
-    @objc dynamic var title = "" 
+    @objc dynamic var title = ""
+    @objc dynamic var income = 0
 }

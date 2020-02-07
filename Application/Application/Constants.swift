@@ -9,9 +9,12 @@
 import Foundation
 
 struct Constants {
-    static let cellIdentifier = "cell"
-    static let cellNibName = "BudgetCell"
+    static let budgetCellIdentifier = "cell"
+    static let budgetCellNibName = "BudgetCell"
+    static let expenseCellNibName = "ExpenseCell"
+    static let expenseCellIndentifier = "expenseIdentifier"
     static let newBudgetSegue = "NewBudget"
+    static let BudgetSegue = "BudgetSegue"
     static let loginSegue = "LoginToChat"
     
    

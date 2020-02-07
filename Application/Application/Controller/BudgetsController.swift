@@ -22,8 +22,9 @@ class BudgetsController : UIViewController {
        
         loadBudgets()
         tableView.dataSource = self
+        tableView.delegate = self
         
-        tableView.register(UINib(nibName: Constants.cellNibName, bundle: nil), forCellReuseIdentifier: Constants.cellIdentifier)
+        tableView.register(UINib(nibName: Constants.budgetCellNibName, bundle: nil), forCellReuseIdentifier: Constants.budgetCellIdentifier)
 
     }
     
@@ -36,12 +37,13 @@ class BudgetsController : UIViewController {
     
     func loadBudgets(){
         budgets = realm.objects(Budget.self)
+        tableView.reloadData()
     }
     
-    
+
 }
 
-//MARK: - TableView
+//MARK: - TableView DataSource
 
 extension BudgetsController : UITableViewDataSource {
     
@@ -52,12 +54,37 @@ extension BudgetsController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as! BudgetCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.budgetCellIdentifier, for: indexPath) as! BudgetCell
         
         cell.budgetTitle.text = budgets?[indexPath.row].title
         
         return cell
     }
     
+    
+    
+}
+
+//MARK: - TableView Delegate
+extension BudgetsController : UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        performSegue(withIdentifier: Constants.BudgetSegue, sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == Constants.BudgetSegue {
+            
+            let destinationVC = segue.destination as! BudgetController
+            
+            if let indexPath = tableView.indexPathForSelectedRow{
+                destinationVC.selectedBudget = budgets?[indexPath.row]
+            }
+            
+            
+        }
+    }
     
 }
